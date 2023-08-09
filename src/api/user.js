@@ -7,6 +7,6 @@ export function login(username, password) {
     })
 }
 
-export function getUserInfo(){
+export function getUserInfo() {
     return axios.post('/getUserInfo')
 }

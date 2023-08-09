@@ -13,7 +13,7 @@
                 <span>账号密码登录</span>
                 <span class="line"></span>
             </div>
-            <el-form ref="formRef" :rules="rules" :model="form" class="w-[250px]">
+            <el-form ref="formRef" :rules="rules" :model="form" class="w-[250px]" @keyup.enter="onSubmit">
                 <el-form-item prop="username">
                     <el-input v-model="form.username" placeholder="请输入用户名">
                         <template #prefix>
@@ -43,11 +43,9 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { login, getUserInfo } from '~/api/user'
+import store from '~/store'
 import { toast } from '~/composables/utils'
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { setToken } from "~/composables/auth";
 
 // do not use same name with ref
 const form = reactive({
@@ -81,7 +79,6 @@ const rules = {
 
 const formRef = ref(null)
 const router = useRouter()
-const store = useStore()
 const loading = ref(false)
 const onSubmit = () => {
     formRef.value.validate((valid) => {
@@ -89,18 +86,12 @@ const onSubmit = () => {
             return false
         }
         loading.value = true
-        login(form.username, form.password)
-            .then(res => {
-                toast('登录成功')
-                setToken(res.token)
-
-                store.commit('setUserInfo', res)
-
-                router.push('/')
-            })
-            .finally(() => {
-                loading.value = false
-            })
+        store.dispatch('login', form).then(res => {
+            toast('登录成功')
+            router.push('/')
+        }).finally(() => {
+            loading.value = false
+        })
     })
 }
 </script>
