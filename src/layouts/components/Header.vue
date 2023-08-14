@@ -9,16 +9,22 @@
         <el-icon class="icon-btn">
             <Fold />
         </el-icon>
-        <el-icon class="icon-btn">
-            <Refresh />
-        </el-icon>
-        <div class="flex items-center ml-auto">
-            <el-icon class="icon-btn">
-                <FullScreen />
+        <el-tooltip effect="dark" content="刷新" placement="bottom">
+            <el-icon class="icon-btn" @click="handleRefresh">
+                <Refresh />
             </el-icon>
-            <el-dropdown class="dropdown">
+        </el-tooltip>
+        <div class="flex items-center ml-auto">
+            <el-tooltip content="全屏">
+                <el-icon class="icon-btn" @click="toggleFullscreen">
+                    <FullScreen v-if="!isFullscreen" />
+                    <Aim v-else />
+                </el-icon>
+            </el-tooltip>
+            <el-dropdown class="dropdown" @command="handleCommand">
                 <span class="flex items-center">
-                    <el-avatar class="mr-1" :size="25" src="https://www.tailwindcss.cn/_next/static/media/levelsio.a3935ad1.jpg" />
+                    <el-avatar class="mr-1" :size="25"
+                        src="https://www.tailwindcss.cn/_next/static/media/levelsio.a3935ad1.jpg" />
                     {{ $store.state.user.username }}
                     <el-icon class="el-icon--right">
                         <arrow-down />
@@ -26,8 +32,8 @@
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>修改密码</el-dropdown-item>
-                        <el-dropdown-item>退出登录</el-dropdown-item>
+                        <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
+                        <el-dropdown-item command="logout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -36,7 +42,47 @@
 </template>
 
 <script setup>
+import { showModal, toast } from '~/composables/utils'
+import { logout } from "~/api/user";
+import store from '~/store';
+import { useRouter } from "vue-router";
+import { useFullscreen } from '@vueuse/core'
 
+const { isFullscreen, toggle } = useFullscreen();
+
+const toggleFullscreen = () => {
+    toggle();
+};
+
+const handleRefresh = () => {
+    location.reload()
+}
+
+const handleCommand = (command) => {
+    switch (command) {
+        case 'logout':
+            handleLogout()
+            break;
+        default:
+            break;
+    }
+}
+
+const router = useRouter()
+function handleLogout() {
+    showModal('是否退出登录？')
+        .then(() => {
+            logout()
+                .finally(() => {
+                    store.dispatch("logout").then(() => {
+                        router.push('/login')
+                        toast('退出登录成功')
+                    })
+                })
+        })
+        .catch(() => {
+        })
+}
 </script>
 
 <style scoped>
@@ -50,18 +96,18 @@
     @apply flex justify-center items-center text-xl font-thin;
 }
 
-.icon-btn{
+.icon-btn {
     @apply flex justify-center items-center;
     width: 42px;
     height: 64px;
     cursor: pointer;
 }
 
-.icon-btn:hover{
+.icon-btn:hover {
     @apply bg-indigo-600;
 }
 
-.header .dropdown{
+.header .dropdown {
     height: 64px;
     @apply flex justify-center items-center mx-5 text-light-50;
     cursor: pointer;
