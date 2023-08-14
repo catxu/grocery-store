@@ -1,4 +1,5 @@
 import { ElNotification, ElMessageBox } from "element-plus";
+import nProgress from "nprogress";
 
 export function toast(message, type = 'success', dangerouslyUseHTMLString = false) {
     ElNotification({
@@ -10,7 +11,7 @@ export function toast(message, type = 'success', dangerouslyUseHTMLString = fals
 }
 
 export function showModal(content = '提示内容', type = 'warning', title = '') {
-    return  ElMessageBox.confirm(
+    return ElMessageBox.confirm(
         content,
         title,
         {
@@ -19,4 +20,12 @@ export function showModal(content = '提示内容', type = 'warning', title = ''
             type,
         }
     )
+}
+
+export function showLoading() {
+    nProgress.start()
+}
+
+export function closeLoading() {
+    nProgress.done()
 }

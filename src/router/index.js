@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 // 1. 定义路由组件.
 // 也可以从其他文件导入
+import Admin from '~/layouts/admin.vue'
 import Index from '~/pages/index.vue'
 import Login from '~/pages/login.vue'
 import NotFound from '~/pages/404.vue'
@@ -10,9 +11,19 @@ import NotFound from '~/pages/404.vue'
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
 const routes = [
-  { path: "/", component: Index },
-  { path: "/login", component: Login },
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+  {
+    path: "/",
+    component: Admin,
+    children: [
+      {
+        path: '/',
+        component: Index,
+        meta: { title: '后台首页' }
+      }
+    ]
+  },
+  { path: "/login", component: Login, meta: { title: '登录页' } },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound, meta: { title: '404页面' } },
 ];
 
 // 3. 创建路由实例并传递 `routes` 配置
