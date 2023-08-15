@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <el-drawer v-model="showDrawer" :showClose="true" :close-on-click-modal="false">
+    <!-- <el-drawer v-model="showDrawer" :showClose="true" :close-on-click-modal="false">
         <h2 class="title">修改密码</h2>
         <div class="flex justify-center items-center">
             <el-form ref="formRef" :rules="rules" :model="form" class="w-[260px]" @keyup.enter="onSubmit">
@@ -64,7 +64,11 @@
                 </el-form-item>
             </el-form>
         </div>
-    </el-drawer>
+    </el-drawer> -->
+
+    <form-drawer ref="formDrawerRef">
+        123
+    </form-drawer>
 </template>
 
 <script setup>
@@ -76,6 +80,7 @@ import { useFullscreen } from '@vueuse/core'
 import { ref, reactive } from 'vue'
 import FormDrawer from '~/components/FormDrawer.vue';
 
+const formDrawerRef = ref(null)
 const showDrawer = ref(false)
 const { isFullscreen, toggle } = useFullscreen();
 
@@ -93,7 +98,7 @@ const handleCommand = (command) => {
             handleLogout()
             break;
         default:
-            showDrawer.value = true
+            formDrawerRef.value.open()
             break;
     }
 }
