@@ -14,3 +14,7 @@ export function getUserInfo() {
 export function logout() {
     return axios.post('/logout')
 }
+
+export function changePassword(data) {
+    return axios.post('/updatePassword', data)
+}
