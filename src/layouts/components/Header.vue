@@ -40,34 +40,22 @@
         </div>
     </div>
 
-    <!-- <el-drawer v-model="showDrawer" :showClose="true" :close-on-click-modal="false">
-        <h2 class="title">修改密码</h2>
-        <div class="flex justify-center items-center">
-            <el-form ref="formRef" :rules="rules" :model="form" class="w-[260px]" @keyup.enter="onSubmit">
-                <el-form-item prop="originPassword">
-                    <el-input type="password" v-model="form.originPassword" placeholder="请输入原密码" show-password
-                        autocomplete="off">
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input type="password" v-model="form.password" placeholder="请输入新密码" show-password autocomplete="off">
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="rePassword">
-                    <el-input type="password" v-model="form.rePassword" placeholder="请确认新密码" show-password
-                        autocomplete="off">
-                    </el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button round class="w-[260px] bg-indigo-500" type="primary" @click="onSubmit"
-                        :loading="loading">提交</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
-    </el-drawer> -->
-
-    <form-drawer ref="formDrawerRef">
-        123
+    <form-drawer ref="formDrawerRef" title="修改密码" size="30%" destroyOnClose @submit="onSubmit">
+        <el-form ref="formRef" :rules="rules" :model="form" class="w-[260px]" @keyup.enter="onSubmit">
+            <el-form-item prop="originPassword">
+                <el-input type="password" v-model="form.originPassword" placeholder="请输入原密码" show-password
+                    autocomplete="off">
+                </el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input type="password" v-model="form.password" placeholder="请输入新密码" show-password autocomplete="off">
+                </el-input>
+            </el-form-item>
+            <el-form-item prop="rePassword">
+                <el-input type="password" v-model="form.rePassword" placeholder="请确认新密码" show-password autocomplete="off">
+                </el-input>
+            </el-form-item>
+        </el-form>
     </form-drawer>
 </template>
 
@@ -81,7 +69,6 @@ import { ref, reactive } from 'vue'
 import FormDrawer from '~/components/FormDrawer.vue';
 
 const formDrawerRef = ref(null)
-const showDrawer = ref(false)
 const { isFullscreen, toggle } = useFullscreen();
 
 const toggleFullscreen = () => {
@@ -175,20 +162,19 @@ const rules = {
 }
 
 const formRef = ref(null)
-const loading = ref(false)
 const onSubmit = () => {
     formRef.value.validate((valid) => {
         if (!valid) {
             return false
         }
-        loading.value = true
+        formDrawerRef.value.showLoading()
         changePassword({ originPassword: form.originPassword, newPassword: form.password })
             .then(res => {
                 toast('修改密码成功，请重新登录')
                 store.dispatch("logout")
                 router.push('/login')
             }).finally(() => {
-                loading.value = false
+                formDrawerRef.value.hideLoading()
             })
     })
 }
