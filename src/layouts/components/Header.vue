@@ -90,10 +90,10 @@ const handleRefresh = () => {
 const handleCommand = (command) => {
     switch (command) {
         case 'logout':
-            openRePasswordForm()
+            handleLogout()
             break;
         default:
-            handleLogout()
+            openRePasswordForm()
             break;
     }
 }
