@@ -5,6 +5,7 @@ import Admin from '~/layouts/admin.vue'
 import Index from '~/pages/index.vue'
 import Login from '~/pages/login.vue'
 import NotFound from '~/pages/404.vue'
+import GoodList from '~/pages/goods/list.vue'
 
 
 // 2. 定义一些路由
@@ -19,7 +20,12 @@ const routes = [
         path: '/',
         component: Index,
         meta: { title: '后台首页' }
-      }
+      },
+      {
+        path: "/goods/list",
+        component: GoodList,
+        meta: { title: '商品管理' }
+      },
     ]
   },
   { path: "/login", component: Login, meta: { title: '登录页' } },
