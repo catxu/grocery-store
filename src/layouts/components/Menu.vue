@@ -1,5 +1,6 @@
 <template>
-    <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" @select="handleSelect">
+    <el-menu class="el-menu-vertical-demo " :style="width = $store.state.asideWidth" unique-opened
+        :collapse-transition="false" :collapse="isCollapse" @select="handleSelect" :default-active="defaultActive">
         <template v-for="(item, index) in asideMenu" :key="index">
             <el-sub-menu v-if="item.child && item.child.length > 0" :index="item.name">
                 <template #title>
@@ -27,11 +28,17 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+import store from '~/store'
+import { computed, ref } from 'vue'
 
 const router = useRouter()
+const route = useRoute()
+const defaultActive = ref(route.path)
 
-const handleSelect=(path)=> {
+const isCollapse = computed(() => !(store.state.asideWidth == '250px'))
+
+const handleSelect = (path) => {
     router.push(path)
 }
 
@@ -48,7 +55,7 @@ const asideMenu = [{
     "name": "商城管理",
     "icon": "shopping-bag",
     "child": [{
-        "name": "商城管理",
+        "name": "商品管理",
         "icon": "shopping-cart-full",
         "path": "/goods/list"
     }]
@@ -58,7 +65,6 @@ const asideMenu = [{
 
 <style scoped>
 .el-menu-vertical-demo {
-    width: 250px;
     top: 64px;
     bottom: 0;
     left: 0;

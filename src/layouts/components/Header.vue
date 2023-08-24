@@ -6,8 +6,9 @@
             </el-icon>
             The Namiya General Store
         </span>
-        <el-icon class="icon-btn">
-            <Fold />
+        <el-icon class="icon-btn" @click="$store.commit('handleAsideWidth')">
+            <Fold v-if="$store.state.asideWidth == '250px'" />
+            <Expand v-else />
         </el-icon>
         <el-tooltip effect="dark" content="刷新" placement="bottom">
             <el-icon class="icon-btn" @click="handleRefresh">

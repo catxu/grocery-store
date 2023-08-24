@@ -5,7 +5,7 @@
                 <Header />
             </el-header>
             <el-container>
-                <el-aside>
+                <el-aside :width="$store.state.asideWidth">
                     <Menu />
                 </el-aside>
                 <el-main>
@@ -24,3 +24,10 @@ import TagList from './components/TagList.vue';
 
 
 </script>
+
+
+<style scoped>
+.el-aside{
+    transition: all 0.2s;
+}
+</style>

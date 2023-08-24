@@ -6,12 +6,16 @@ import { setToken, removeToken } from "~/composables/auth";
 const store = createStore({
     state() {
         return {
-            user: {}
+            user: {},
+            asideWidth: "250px"
         }
     },
     mutations: {
         setUserInfo(state, user) {
             state.user = user
+        },
+        handleAsideWidth(state) {
+            state.asideWidth = state.asideWidth === '250px' ? '64px' : '250px'
         }
     },
     actions: {
