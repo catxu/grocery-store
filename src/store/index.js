@@ -7,12 +7,16 @@ const store = createStore({
     state() {
         return {
             user: {},
+            menus: [],
             asideWidth: "250px"
         }
     },
     mutations: {
         setUserInfo(state, user) {
             state.user = user
+        },
+        setMenu(state, menus) {
+            state.menus = menus
         },
         handleAsideWidth(state) {
             state.asideWidth = state.asideWidth === '250px' ? '64px' : '250px'
@@ -31,6 +35,7 @@ const store = createStore({
             return new Promise((resolve, reject) => {
                 getUserInfo().then(res => {
                     commit("setUserInfo", res)
+                    commit("setMenu", res.menus)
                     resolve(res)
                 }).catch(err => reject(err))
             })

@@ -1,4 +1,4 @@
-import router from "~/router";
+import { router, addRoutes } from "~/router";
 import { getToken } from "~/composables/auth";
 import { toast, showLoading, closeLoading } from "~/composables/utils";
 import store from "./store";
@@ -17,14 +17,16 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // 如果用户已登录，自动获取用户信息
+    let hasNewRoute = false
     if (token) {
-        await store.dispatch('getUserInfo')
+        let { menus } = await store.dispatch('getUserInfo')
+        hasNewRoute = addRoutes(menus)
     }
     // 设置页面标题
-    let title = to.meta.title 
+    let title = to.meta.title
     document.title = title
 
-    next()
+    hasNewRoute ? next(to.fullPath) : next()
 
 })
 

@@ -8,37 +8,75 @@ import NotFound from '~/pages/404.vue'
 import GoodList from '~/pages/goods/list.vue'
 
 
-// 2. 定义一些路由
-// 每个路由都需要映射到一个组件。
-// 我们后面再讨论嵌套路由。
+// 默认路由
 const routes = [
   {
-    path: "/",
+    path: '/',
     component: Admin,
-    children: [
-      {
-        path: '/',
-        component: Index,
-        meta: { title: '后台首页' }
-      },
-      {
-        path: "/goods/list",
-        component: GoodList,
-        meta: { title: '商品管理' }
-      },
-    ]
+    name: 'admin'
   },
-  { path: "/login", component: Login, meta: { title: '登录页' } },
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound, meta: { title: '404页面' } },
+  {
+    path: '/login',
+    component: Login,
+    meta: {
+      title: '登录页'
+    }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
+    meta: {
+      title: '404页面'
+    }
+  },
 ];
+
+// 动态路由，用于匹配菜单进行动态添加路由
+const asyncRoutes = [
+  {
+    path: '/',
+    name: '/',
+    component: Index,
+    meta: {
+      title: '后台首页'
+    }
+  },
+  {
+    path: '/goods/list',
+    name: '/goods/list',
+    component: GoodList,
+    meta: {
+      title: '商品管理'
+    }
+  },
+]
 
 // 3. 创建路由实例并传递 `routes` 配置
 // 你可以在这里输入更多的配置，但我们在这里
 // 暂时保持简单
-const router = createRouter({
+export const router = createRouter({
   // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
   history: createWebHashHistory(),
   routes, // `routes: routes` 的缩写
 });
 
-export default router
+export function addRoutes(menus) {
+  let hasNewRoute = false
+  const findAndAddRouteByMenu = (arr) => {
+    arr.forEach(e => {
+      let item = asyncRoutes.find(o => o.path == e.path)
+      if (item && !router.hasRoute(item.name)) {
+        router.addRoute('admin', item)
+        hasNewRoute = true
+      }
+      if (e.child && e.child.length > 0) {
+        findAndAddRouteByMenu(e.child)
+      }
+    })
+  }
+
+  findAndAddRouteByMenu(menus)
+
+  return hasNewRoute
+}

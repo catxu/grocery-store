@@ -42,24 +42,7 @@ const handleSelect = (path) => {
     router.push(path)
 }
 
-const asideMenu = [{
-    "name": "后台面板",
-    "icon": "help",
-    "child": [{
-        "name": "主控台",
-        "icon": "home-filled",
-        "path": "/"
-    }]
-},
-{
-    "name": "商城管理",
-    "icon": "shopping-bag",
-    "child": [{
-        "name": "商品管理",
-        "icon": "shopping-cart-full",
-        "path": "/goods/list"
-    }]
-}]
+const asideMenu = computed(() => store.state.menus)
 
 </script>
 

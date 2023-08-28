@@ -27,7 +27,7 @@ import TagList from './components/TagList.vue';
 
 
 <style scoped>
-.el-aside{
+.el-aside {
     transition: all 0.2s;
 }
 </style>
