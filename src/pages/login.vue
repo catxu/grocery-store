@@ -45,7 +45,7 @@
 import { ref, reactive } from 'vue'
 import store from '~/store'
 import { toast } from '~/composables/utils'
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
 
 // do not use same name with ref
 const form = reactive({

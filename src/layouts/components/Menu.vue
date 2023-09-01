@@ -1,5 +1,5 @@
 <template>
-    <el-menu class="el-menu-vertical-demo " :style="width = $store.state.asideWidth" unique-opened
+    <el-menu class="el-menu-vertical-demo " :style="{ width: $store.state.asideWidth }" unique-opened
         :collapse-transition="false" :collapse="isCollapse" @select="handleSelect" :default-active="defaultActive">
         <template v-for="(item, index) in asideMenu" :key="index">
             <el-sub-menu v-if="item.child && item.child.length > 0" :index="item.name">
