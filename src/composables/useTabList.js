@@ -38,7 +38,7 @@ export function useTabList() {
         if (active == t) {
             currentTabs.forEach((tab, index) => {
                 if (tab.path == t) {
-                    const nextTab = currentTabs[index + 1] || currentTabs[index - 1]
+                    let nextTab = currentTabs[index + 1] || currentTabs[index - 1]
                     active = nextTab.path
                 }
             })

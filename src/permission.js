@@ -3,6 +3,7 @@ import { getToken } from "~/composables/auth";
 import { toast, showLoading, closeLoading } from "~/composables/utils";
 import store from "./store";
 
+let hasGotInfo = false
 router.beforeEach(async (to, from, next) => {
     // 开启全局loading
     showLoading()
@@ -18,8 +19,9 @@ router.beforeEach(async (to, from, next) => {
 
     // 如果用户已登录，自动获取用户信息
     let hasNewRoute = false
-    if (token) {
+    if (token && !hasGotInfo) {
         let { menus } = await store.dispatch('getUserInfo')
+        hasGotInfo = true
         hasNewRoute = addRoutes(menus)
     }
     // 设置页面标题
