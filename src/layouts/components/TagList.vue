@@ -8,7 +8,7 @@
         </el-tabs>
 
         <span class="tag-btn">
-            <el-dropdown>
+            <el-dropdown @command="handleCmd">
                 <span class="el-dropdown-link">
                     <el-icon>
                         <arrow-down />
@@ -16,11 +16,8 @@
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>Action 1</el-dropdown-item>
-                        <el-dropdown-item>Action 2</el-dropdown-item>
-                        <el-dropdown-item>Action 3</el-dropdown-item>
-                        <el-dropdown-item disabled>Action 4</el-dropdown-item>
-                        <el-dropdown-item divided>Action 5</el-dropdown-item>
+                        <el-dropdown-item command="closeOthers">关闭其他</el-dropdown-item>
+                        <el-dropdown-item command="closeAll">全部关闭</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -28,68 +25,11 @@
     </div>
     <div style="height: 44px;"></div>
 </template>
-  
+
 <script setup>
-import { ref } from 'vue'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
-import { useCookies } from "@vueuse/integrations/useCookies";
-import { router } from '~/router';
+import {useTabList} from '~/composables/useTabList.js'
 
-const cookie = useCookies()
-const route = useRoute()
-
-const activeTab = ref(route.fullPath)
-const tabs = ref([
-    {
-        title: '后台首页',
-        path: '/'
-    }
-])
-
-function initTabs() {
-    const currentTabs = cookie.get('tabs')
-    tabs.value = currentTabs
-}
-
-initTabs()
-
-function addTab(tab) {
-    const tabNotExist = tabs.value.findIndex(t => t.path == tab.path) == -1
-    if (tabNotExist) {
-        tabs.value.push(tab)
-    }
-    cookie.set('tabs', tabs.value)
-}
-
-const removeTab = (t) => {
-    let currentTabs = tabs.value
-    let active = activeTab.value
-    if (active == t) {
-        currentTabs.forEach((tab, index) => {
-            if (tab.path == t) {
-                const nextTab = currentTabs[index + 1] || currentTabs[index - 1]
-                active = nextTab.path
-            }
-        })
-    }
-    activeTab.value = active
-    tabs.value = currentTabs.filter(tab => tab.path != t)
-    cookie.set('tabs', tabs.value)
-}
-
-const changeTab = (t) => {
-    router.path(t)
-    activeTab.value = t
-}
-
-
-onBeforeRouteUpdate((to, from) => {
-    addTab({
-        title: to.meta.title,
-        path: to.fullPath
-    })
-    activeTab.value = to.fullPath
-})
+const {activeTab, tabs, removeTab, changeTab, handleCmd} = useTabList()
 
 </script>
   
