@@ -1,5 +1,5 @@
 <script setup>
- 
+
 </script>
 
 <template>
@@ -8,8 +8,12 @@
   </div>
 </template>
 
-<style scoped>
-#nprogress .bar{
+<style>
+#nprogress .bar {
   height: 3px;
+}
+
+body {
+  @apply bg-gray-100;
 }
 </style>

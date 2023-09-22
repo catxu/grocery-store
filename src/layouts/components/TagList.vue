@@ -27,9 +27,9 @@
 </template>
 
 <script setup>
-import {useTabList} from '~/composables/useTabList.js'
+import { useTabList } from '~/composables/useTabList.js'
 
-const {activeTab, tabs, removeTab, changeTab, handleCmd} = useTabList()
+const { activeTab, tabs, removeTab, changeTab, handleCmd } = useTabList()
 
 </script>
   
