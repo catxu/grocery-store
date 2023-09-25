@@ -24,12 +24,14 @@
                 </el-card>
             </el-col>
         </el-row>
+        <IndexNav />
     </div>
 </template>
   
 <script setup>
 import { ref } from 'vue';
 import { getStatisticsInfo } from '~/api/index.js';
+import IndexNav from '~/components/IndexNav.vue'
 
 const statisticsInfos = ref([])
 getStatisticsInfo().then(res => {

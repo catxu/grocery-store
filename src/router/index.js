@@ -6,6 +6,7 @@ import Index from '~/pages/index.vue'
 import Login from '~/pages/login.vue'
 import NotFound from '~/pages/404.vue'
 import GoodList from '~/pages/goods/list.vue'
+import UserList from '~/pages/user/list.vue'
 
 
 // 默认路由
@@ -48,6 +49,14 @@ const asyncRoutes = [
     component: GoodList,
     meta: {
       title: '商品管理'
+    }
+  },
+  {
+    path: '/user/list',
+    name: '/user/list',
+    component: UserList,
+    meta: {
+      title: '用户管理'
     }
   },
 ]

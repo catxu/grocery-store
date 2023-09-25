@@ -24,9 +24,9 @@
 </template>
 
 <script setup>
-import Header from './components/Header.vue';
-import Menu from './components/Menu.vue';
-import TagList from './components/TagList.vue';
+import Header from '~/components/Header.vue';
+import Menu from '~/components/Menu.vue';
+import TagList from '~/components/TagList.vue';
 
 
 </script>
