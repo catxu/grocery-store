@@ -104,6 +104,7 @@ const handleCommand = (command) => {
 .header {
     @apply flex items-center bg-indigo-500 text-light-50 fixed left-0 top-0 right-0;
     height: 64px;
+    z-index: 1000;
 }
 
 .logo {

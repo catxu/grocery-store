@@ -25,6 +25,14 @@
             </el-col>
         </el-row>
         <IndexNav />
+
+        <el-row :gutter="20" class="mt-5">
+            <el-col :span="12" :offset="0">
+                <IndexChart />
+            </el-col>
+            <el-col :span="12" :offset="0"></el-col>
+        </el-row>
+        
     </div>
 </template>
   
@@ -32,6 +40,7 @@
 import { ref } from 'vue';
 import { getStatisticsInfo } from '~/api/index.js';
 import IndexNav from '~/components/IndexNav.vue'
+import IndexChart from '~/components/IndexChart.vue'
 
 const statisticsInfos = ref([])
 getStatisticsInfo().then(res => {
