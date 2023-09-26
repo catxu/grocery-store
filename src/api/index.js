@@ -9,3 +9,7 @@ export function getEChartStatistics(type) {
         type
     })
 }
+
+export function getTODOs() {
+    return axios.get('/getTODOs')
+}
