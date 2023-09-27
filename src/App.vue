@@ -27,16 +27,16 @@ body {
 }
 
 ::-webkit-scrollbar:hover {
-  width: 10px;
-  height: 10px;
+  width: 0px;
+  height: 0px;
 }
 
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #4B5563;
   border: 2px solid transparent;
   background-clip: padding-box;
-}
+} */
 
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-track {
