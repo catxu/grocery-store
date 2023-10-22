@@ -1,8 +1,8 @@
 <template>
-    <el-aside width="200px" class="i-aside">
+    <el-aside width="200px" class="i-aside" v-loading="loading">
         <div class="i-a-top">
             <ImageAsideList v-for="(item, index) in classes" :key="index" :active="activeId == item.id"
-                @edit="handleEdit(item)" @delete="handleDelete">
+                @edit="handleEdit(item)" @delete="handleDelete(item.id)">
                 {{ item.categoryName }}
             </ImageAsideList>
         </div>
@@ -26,10 +26,12 @@
 <script setup>
 import ImageAsideList from './ImageAsideList.vue';
 import FormDrawer from './FormDrawer.vue'
-import { getImageClasses, createImageClass, updateImageClass } from '~/api/pics.js'
+import { getImageClasses, createImageClass, updateImageClass, deleteImageClass } from '~/api/pics.js'
 import { toast } from '~/composables/utils.js'
 
 import { ref, reactive, computed } from 'vue'
+
+const loading = ref(false)
 
 const form = reactive({
     name: "",
@@ -78,6 +80,17 @@ const handleEdit = (item) => {
     form.name = item.categoryName
     form.order = item.order
     formDrawerRef.value.open()
+}
+
+const handleDelete = (id) => {
+    console.log(id);
+    loading.value = true
+    deleteImageClass(id)
+        .then(res => {
+            toast('删除成功')
+            fetchImageClasses()
+        })
+        .finally(() => loading.value = false)
 }
 
 const openDrawer = () => {
