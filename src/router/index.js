@@ -8,6 +8,7 @@ import NotFound from '~/pages/404.vue'
 import GoodList from '~/pages/goods/list.vue'
 import UserList from '~/pages/user/list.vue'
 import PicList from '~/pages/pic/list.vue'
+import NoticeList from '~/pages/notice/list.vue'
 
 
 // 默认路由
@@ -66,6 +67,14 @@ const asyncRoutes = [
     component: PicList,
     meta: {
       title: '图库管理'
+    }
+  },
+  {
+    path: '/notice/list',
+    name: '/notice/list',
+    component: NoticeList,
+    meta: {
+      title: '公告管理'
     }
   },
 ]
