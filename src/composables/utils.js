@@ -22,6 +22,14 @@ export function showModal(content = '提示内容', type = 'warning', title = ''
     )
 }
 
+export function showPrompt(tip, value = '', title = '') {
+    return ElMessageBox.prompt(tip, title, {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        inputValue: value
+    })
+}
+
 export function showLoading() {
     nProgress.start()
 }

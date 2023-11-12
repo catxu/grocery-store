@@ -4,7 +4,7 @@
             <span class="truncate">
                 <slot />
             </span>
-            <el-button class="ml-auto px-1" text type="primary" size="small" @click="$emit('edit')">
+            <el-button class="ml-auto px-1" text type="primary" size="small" @click.stop="$emit('edit')">
                 <el-icon :size="15">
                     <Edit />
                 </el-icon>

@@ -2,7 +2,7 @@
     <el-aside width="200px" class="i-aside" v-loading="loading">
         <div class="i-a-top">
             <ImageAsideList v-for="(item, index) in classes" :key="index" :active="activeId == item.id"
-                @edit="handleEdit(item)" @delete="handleDelete(item.id)">
+                @edit="handleEdit(item)" @delete="handleDelete(item.id)" @click="handleClassChange(item.id)">
                 {{ item.categoryName }}
             </ImageAsideList>
         </div>
@@ -83,7 +83,6 @@ const handleEdit = (item) => {
 }
 
 const handleDelete = (id) => {
-    console.log(id);
     loading.value = true
     deleteImageClass(id)
         .then(res => {
@@ -91,6 +90,16 @@ const handleDelete = (id) => {
             fetchImageClasses()
         })
         .finally(() => loading.value = false)
+}
+
+const emit = defineEmits(['classChanged'])
+
+const handleClassChange = (id) => {
+    if (activeId.value != id) {
+        // 通知父组件 -> list.vue
+        emit('classChanged', id)
+    }
+    activeId.value = id
 }
 
 const openDrawer = () => {
@@ -109,7 +118,7 @@ function fetchImageClasses(currentPage) {
         totalCount.value = res.totalCount
         let activeItem = classes.value[0]
         if (activeItem) {
-            activeId.value = activeItem.id
+            handleClassChange(activeItem.id)
         }
     })
 }
