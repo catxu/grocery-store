@@ -35,7 +35,7 @@
 <script setup>
 import { ref } from 'vue'
 import { getImageList, updateImage, deleteImage } from '~/api/image'
-import { showPrompt, toast } from '~/composables/util'
+import { showPrompt, toast } from '~/composables/utils'
 
 const loading = ref(false)
 const page = ref(1)

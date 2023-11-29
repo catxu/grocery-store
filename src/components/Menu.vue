@@ -44,6 +44,13 @@ const handleSelect = (path) => {
 
 const asideMenu = computed(() => store.state.menus)
 
+const changeActiveMenu = (path) => {
+    defaultActive.value = path
+}
+
+defineExpose({
+    changeActiveMenu
+})
 </script>
 
 <style scoped>

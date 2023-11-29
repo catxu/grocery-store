@@ -33,7 +33,7 @@
         </div>
 
         <FormDrawer ref="formDrawerRef" :title="drawerTitle + '公告'" @submit="handleSubmit">
-            <el-form :model="form" ref="formRef" :rules="rules" label-width="80px" :inline="false" size="normal">
+            <el-form :model="form" ref="formRef" :rules="rules" label-width="80px" :inline="false" size="default">
                 <el-form-item label="公告标题" prop="title">
                     <el-input v-model="form.title" placeholder="请输入公告标题" />
                 </el-form-item>

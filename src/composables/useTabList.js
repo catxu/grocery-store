@@ -1,11 +1,10 @@
 import { ref } from 'vue'
-import { useRoute, onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 import { useCookies } from '@vueuse/integrations/useCookies';
 
 export function useTabList() {
     const cookie = useCookies()
     const route = useRoute()
-    const router = useRouter()
 
     const activeTab = ref(route.fullPath)
     const tabs = ref([
@@ -48,11 +47,6 @@ export function useTabList() {
         cookie.set('tabs', tabs.value)
     }
 
-    const changeTab = (t) => {
-        activeTab.value = t
-        router.push(t)
-    }
-
 
     onBeforeRouteUpdate((to, from) => {
         addTab({
@@ -73,6 +67,6 @@ export function useTabList() {
     }
 
     return {
-        activeTab, tabs, removeTab, changeTab, handleCmd
+        activeTab, tabs, removeTab, handleCmd
     }
 }

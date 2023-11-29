@@ -4,7 +4,7 @@
             <div class="flex justify-between">
                 <span class="text-sm">订单统计</span>
                 <div>
-                    <el-check-tag v-for="(item, key) in options" :key="index" :checked="currentOption == item.value"
+                    <el-check-tag v-for="(item, index) in options" :key="index" :checked="currentOption == item.value"
                         @click="handleClick(item.value)" style="margin-right: 8px">
                         {{ item.text }}
                     </el-check-tag>

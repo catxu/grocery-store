@@ -25,14 +25,24 @@
     </div>
     <div style="height: 44px;"></div>
 </template>
-
-<script setup>
-import { useTabList } from '~/composables/useTabList.js'
-
-const { activeTab, tabs, removeTab, changeTab, handleCmd } = useTabList()
-
-</script>
   
+<script setup>
+import { useTabList } from "~/composables/useTabList.js";
+import { useRouter } from "vue-router";
+const { activeTab, tabs, removeTab, handleCmd } = useTabList();
+
+const emit = defineEmits(["tabChanged"]);
+const router = useRouter();
+
+// 不能定义在useTabList里面，否则会收不到事件
+const changeTab = t => {
+    activeTab.value = t
+    router.push(t)
+    // 通知父组件 -> admin.vue
+    emit("tabChanged", t)
+}
+</script>
+    
 <style scoped>
 .t-tag-list {
     @apply fixed flex items-center bg-gray-100;

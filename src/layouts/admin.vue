@@ -6,10 +6,10 @@
             </el-header>
             <el-container>
                 <el-aside :width="$store.state.asideWidth">
-                    <Menu />
+                    <Menu ref="menuRef" />
                 </el-aside>
                 <el-main>
-                    <TagList />
+                    <TagList ref="tabListRef" @tab-changed="handleTabChange" />
                     <router-view v-slot="{ Component }">
                         <transition name="fade">
                             <keep-alive :max="10">
@@ -22,16 +22,22 @@
         </el-container>
     </div>
 </template>
-
+  
 <script setup>
-import Header from '~/components/Header.vue';
-import Menu from '~/components/Menu.vue';
-import TagList from '~/components/TagList.vue';
+import { ref } from "vue";
+import Header from "~/components/Header.vue";
+import Menu from "~/components/Menu.vue";
+import TagList from "~/components/TagList.vue";
 
+const menuRef = ref(null);
+const tabListRef = ref(null);
 
-</script>
-
-
+// 调用子组件方法，修改当前活跃菜单
+const handleTabChange = path => {
+    menuRef.value.changeActiveMenu(path);
+};
+</script>  
+  
 <style scoped>
 .el-aside {
     transition: all 0.2s;
